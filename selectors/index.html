@@ -37,60 +37,61 @@
         <h1>DOM Manipulation | jQuery</h1>
     </header>
     <div id="container">
-        <button id="btn1">Button 1</button>
-        <p class="para1">This is a paragraph</p>
-        <p class="para2">This is another paragraph</p>
-        <div id="myDiv">
-            <input type="text" id="newItem">
-            <ul id="list">
-                <li>List Item 1</li>
-                <li>List Item 2</li>
-                <li>List Item 3</li>
-                <li>List Item 4</li>
-            </ul>
-            <a href="http://google.com">Google</a>
-            <ul id="nameList"></ul>
-        </div>
+        <div id="result"></div>
+        <ul id="users"></ul>
+        <h3>Add post</h3>
+        <form id="postForm" action="https://jsonplaceholder.typicode.com/posts">
+            <input type="text" id="title" placeholder="Title"><br>
+            <textarea name="" id="body" cols="30" rows="10"></textarea><br>
+            <input type="submit" value="submit">
+        </form>
     </div>
     <script>
-    $(document).ready(function(e){
-        // $('p.para1').css({color:'red', background:'#ccc'});
-        // $('p.para2').addClass('myClass');
-        // $('p.para2').removeClass('myClass');
-        // $('#btn1').click(function(){
-        //     $('p.para2').toggleClass('myClass');
-        // })
-
-        // $('#myDiv').text('Hello world');
-        // $('#myDiv').html('<h3>Hello world</h3>');
-        // alert($('#myDiv').text())
-        // $('ul').prepend('<li>Prepend List Item</li>');
-        // $('ul').append('<li>Append List Item</li>');
-        // $('ul').before('<h4> This is the title </h4>');
-        // $('a').attr('target', '_blank')
-        // $('a').removeAttr('target')
-        // alert($('a').attr('href'));
-        // $('p').wrap('<h1>');
-        // $('p').wrapAll('<h1>');
-        $('#newItem').keyup(function(e){
-            var code = e.which;
-            if(code == 13){
-                e.preventDefault();
-                $('ul').append('<li>' + e.target.value + '</li>')
+    $(document).ready(function(e)
+    {
+        $('#result').load('test.html', function(responseTxt, statusTxt, xhr){
+            if(statusTxt == "success"){
+                // alert('It went fine');
+            } else if (statusTxt == "error"){
+                alert('Error: ' + xhr.statusText);
             }
         });
 
-        var myArr = ['Rab', 'Kelly', 'Nate', 'Jose'];
+        // $.getJSON('users.json', function(data)
+        // {
+        //     $.each(data, function(i, user)
+        //     {
+        //         $('ul#users').append('<li>' + user.firstName + ' ' 
+        //         + user.lastName + '<br> Email: ' + user.email + 
+        //         '</li>').css({'list-style': 'none', 'font-weight': 
+        //         'bold'});
+        //     });
+        // });
 
-        var newArr = $('ul#list li').toArray();
+        // $.ajax({
+        //     method: 'GET',
+        //     url: 'https://jsonplaceholder.typicode.com/posts',
+        //     dataType: 'json'
+        // }).done(function(data){
+        //     $.map(data, function(post, i){
+        //         $('#result').append('<h3>' + post.title + '</h3><p>' + post.body + '</p>');
+        //     });
+        // });
 
-        $.each(myArr, function(i, val){
-            $('#nameList').append('<li>' + val + '</li>');
+        $('#postForm').submit(function(e){
+            e.preventDefault();
+
+            var title = $('#title').val();
+            var body = $('#body').val();
+            var url = $(this).attr('action');
+
+            $.post(url, {title:title, body:body}).
+            done(function(data){
+                console.log('Post saved');
+                console.log(data);
+            });
         });
-
-        console.log(newArr);
     });
-
     </script>
 </body>
 </html>
