@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Selectors</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body{
+            font-size: 17px;
+            font-family: arial;
+            background: #f4f4f4;
+            line-height: 1.5em;
+        }
+        header{
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px #000 solid;
+            margin-bottom: 10px;
+        }
+        #container{
+            width: 90%;
+            margin: auto;
+            padding:10px;
+        }
+        .myClass{
+            color:white;
+            background:black
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DOM Manipulation | jQuery</h1>
+    </header>
+    <div id="container">
+        <button id="btn1">Button 1</button>
+        <p class="para1">This is a paragraph</p>
+        <p class="para2">This is another paragraph</p>
+        <div id="myDiv">
+            <input type="text" id="newItem">
+            <ul id="list">
+                <li>List Item 1</li>
+                <li>List Item 2</li>
+                <li>List Item 3</li>
+                <li>List Item 4</li>
+            </ul>
+            <a href="http://google.com">Google</a>
+            <ul id="nameList"></ul>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function(e){
+        // $('p.para1').css({color:'red', background:'#ccc'});
+        // $('p.para2').addClass('myClass');
+        // $('p.para2').removeClass('myClass');
+        // $('#btn1').click(function(){
+        //     $('p.para2').toggleClass('myClass');
+        // })
+
+        // $('#myDiv').text('Hello world');
+        // $('#myDiv').html('<h3>Hello world</h3>');
+        // alert($('#myDiv').text())
+        // $('ul').prepend('<li>Prepend List Item</li>');
+        // $('ul').append('<li>Append List Item</li>');
+        // $('ul').before('<h4> This is the title </h4>');
+        // $('a').attr('target', '_blank')
+        // $('a').removeAttr('target')
+        // alert($('a').attr('href'));
+        // $('p').wrap('<h1>');
+        // $('p').wrapAll('<h1>');
+        $('#newItem').keyup(function(e){
+            var code = e.which;
+            if(code == 13){
+                e.preventDefault();
+                $('ul').append('<li>' + e.target.value + '</li>')
+            }
+        });
+
+        var myArr = ['Rab', 'Kelly', 'Nate', 'Jose'];
+
+        var newArr = $('ul#list li').toArray();
+
+        $.each(myArr, function(i, val){
+            $('#nameList').append('<li>' + val + '</li>');
+        });
+
+        console.log(newArr);
+    });
+
+    </script>
+</body>
+</html>
